@@ -1,0 +1,128 @@
+/* Page layout just to center the card for the demo */
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI",
+    sans-serif;
+  background: #f3f4f6;
+  color: #111827;
+}
+
+.page-wrapper {
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 2rem;
+}
+
+/* CARD STYLES */
+.bio-card {
+  position: relative;
+  max-width: 960px;
+  width: 100%;
+  aspect-ratio: 3 / 1; /* keeps a wide, banner-like shape */
+  border-radius: 16px;
+  overflow: hidden;
+  box-shadow: 0 18px 45px rgba(0, 0, 0, 0.12);
+  background: #000;
+}
+
+/* Background image */
+.bio-card__image {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+/* Overlay ribbon / panel */
+.bio-card__overlay {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  background: rgba(15, 23, 42, 0.82);
+  color: #f9fafb;
+  cursor: pointer;
+  /* This is the "ribbon" width when collapsed */
+  width: 80px;
+  transition: width 0.4s ease;
+}
+
+/* Expand when the card (or overlay) is hovered */
+.bio-card:hover .bio-card__overlay,
+.bio-card__overlay.is-open {
+  width: 100%;
+}
+
+/* The thin vertical ribbon section */
+.bio-card__label {
+  flex: 0 0 80px; /* fixed width */
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-right: 1px solid rgba(148, 163, 184, 0.45);
+}
+
+.bio-card__label span {
+  writing-mode: vertical-rl; /* vertical text */
+  text-orientation: mixed;
+  font-size: 0.9rem;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  font-weight: 600;
+}
+
+/* Bio text that appears after expansion */
+.bio-card__content {
+  flex: 1;
+  padding: clamp(1.5rem, 2vw, 2.5rem);
+  opacity: 0;
+  transform: translateX(20px);
+  transition: opacity 0.3s ease 0.12s, transform 0.3s ease 0.12s;
+  pointer-events: none; /* avoids trapping hover when collapsed */
+}
+
+.bio-card__content h3 {
+  margin: 0 0 0.5rem;
+  font-size: clamp(1.4rem, 2vw, 1.8rem);
+}
+
+.bio-card__content p {
+  margin: 0.25rem 0;
+  max-width: 48rem;
+  line-height: 1.5;
+  font-size: 0.95rem;
+}
+
+/* Reveal body text when expanded */
+.bio-card:hover .bio-card__content,
+.bio-card__overlay.is-open .bio-card__content {
+  opacity: 1;
+  transform: translateX(0);
+  pointer-events: auto;
+}
+
+/* Optional: slightly dim label text when expanded */
+.bio-card:hover .bio-card__label span,
+.bio-card__overlay.is-open .bio-card__label span {
+  opacity: 0.55;
+}
+
+/* Basic responsiveness */
+@media (max-width: 640px) {
+  .bio-card {
+    aspect-ratio: 4 / 3;
+  }
+
+  .bio-card__content p {
+    font-size: 0.9rem;
+  }
+}
